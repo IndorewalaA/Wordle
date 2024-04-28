@@ -3,15 +3,15 @@ import pygame
 
 
 class Letter:
-    def __init__(self, color: str, col: int, row: int, screen: pygame.Surface):
+    def __init__(self, col: int, row: int, screen: pygame.Surface):
         self.letter = ""
-        self.color = color
+        self.color = "black"
         self.row = row
         self.col = col
         self.screen = screen
         self.submitted = False
         self.current = False
-        self.rect = pygame.Rect(40 + ((self.col - 1) * 60) + ((self.col - 1) * 5), 70 + (self.row * 5) + (self.row * 60)
+        self.rect = pygame.Rect(40 + (self.col * 60) + (self.col * 5), 90 + (self.row * 5) + (self.row * 60)
                                 , 60, 60)
 
     def set_color(self, color: str):
@@ -23,7 +23,7 @@ class Letter:
     def set_letter(self, letter: str):
         self.letter = letter.capitalize()
 
-    def draw(self, current):
+    def draw(self):
         font = pygame.font.Font("fonts\FranklinGothic.ttf", 60)
         if self.letter != "" and self.submitted:
             if self.color == "gray":
@@ -35,5 +35,5 @@ class Letter:
         else:
             pygame.draw.rect(self.screen, (86, 87, 88), self.rect, width=2, border_radius=1)
         letter_card = font.render(self.letter, True, (255, 255, 255))
-        letter_block = letter_card.get_rect(center=(69 + ((self.col - 1) * 60) + ((self.col - 1) * 5), 105 + (self.row * 5) + (self.row * 60)))
+        letter_block = letter_card.get_rect(center=(69 + (self.col * 60) + ((self.col) * 5), 105 + (self.row * 5) + (self.row * 60)))
         self.screen.blit(letter_card, letter_block)

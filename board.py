@@ -1,8 +1,28 @@
-import pygame
 from letter import Letter
+import pygame
+import random
+
+
+
 
 class Board:
-    word: list[Letter]
+    board: list[list[Letter]]
 
-    def __init__(self, screen, attempt_num: int):
+    def __init__(self, screen):
+        self.word_list = []
         self.screen = screen
+        self.board = [[] for _ in range(6)]
+        with open("words_list.txt", 'r', encoding='utf-8') as file:
+            for line in file:
+                words = line.strip().split()
+                self.word_list.extend(words)
+        self.word = self.word_list[random.randint(0, 5657)]
+        print(self.word)
+        for i in range(6):
+            for j in range(5):
+                self.board[i].append(Letter(j, i, self.screen))
+
+    def draw(self):
+        for row in self.board:
+            for element in row:
+                element.draw()
