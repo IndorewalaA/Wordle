@@ -31,7 +31,12 @@ def main():
     screen = pygame.display.set_mode((400, 600))
     pygame.init()
     main_menu(screen)
-    letter = Letter("red", True, screen)
+    letter = Letter("red", 1, 1, screen)
+    letter1 = Letter("red", 1, 2, screen)
+    letter2 = Letter("red", 1, 3, screen)
+    letter3 = Letter("red", 1, 4, screen)
+    letter4 = Letter("red", 1, 5, screen)
+    letter5 = Letter("red", 1, 6, screen)
     while True:
         franklin_gothic = pygame.font.Font("fonts\FranklinGothic.ttf",35)
         small_title = franklin_gothic.render("Wordle", True, (255, 255, 255))
@@ -43,6 +48,11 @@ def main():
             screen.fill((18, 18, 19))
             screen.blit(small_title, title_card)
             letter.draw(1)
+            letter1.draw(1)
+            letter2.draw(1)
+            letter3.draw(1)
+            letter4.draw(1)
+            letter5.draw(1)
             pygame.display.update()
 
 
