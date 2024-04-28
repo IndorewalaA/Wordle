@@ -45,6 +45,9 @@ def main():
             screen.fill((18, 18, 19))
             screen.blit(small_title, title_card)
             board.draw()
+            if event.type == pygame.KEYDOWN:
+                if pygame.K_a <= event.key <= pygame.K_z:
+                    board.type(chr(event.key - pygame.K_a + ord('A')))
             pygame.display.update()
 
 

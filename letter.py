@@ -24,7 +24,7 @@ class Letter:
         self.letter = letter.capitalize()
 
     def draw(self):
-        font = pygame.font.Font("fonts\FranklinGothic.ttf", 60)
+        font = pygame.font.Font("fonts\FranklinGothic.ttf", 40)
         if self.letter != "" and self.submitted:
             if self.color == "gray":
                 pygame.draw.rect(self.screen, (86, 87, 88), self.rect)
@@ -35,5 +35,6 @@ class Letter:
         else:
             pygame.draw.rect(self.screen, (86, 87, 88), self.rect, width=2, border_radius=1)
         letter_card = font.render(self.letter, True, (255, 255, 255))
-        letter_block = letter_card.get_rect(center=(69 + (self.col * 60) + ((self.col) * 5), 105 + (self.row * 5) + (self.row * 60)))
+        letter_block = letter_card.get_rect(center=(70 + (self.col * 60) + (self.col * 5), 123 + (self.row * 5) +
+                                                    (self.row * 60)))
         self.screen.blit(letter_card, letter_block)
