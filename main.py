@@ -1,6 +1,7 @@
 import pygame
 import sys
 from pygame.locals import *
+from letter import Letter
 
 
 def main_menu(screen: pygame.Surface):
@@ -30,6 +31,7 @@ def main():
     screen = pygame.display.set_mode((400, 600))
     pygame.init()
     main_menu(screen)
+    letter = Letter("red", True, screen)
     while True:
         franklin_gothic = pygame.font.Font("fonts\FranklinGothic.ttf",35)
         small_title = franklin_gothic.render("Wordle", True, (255, 255, 255))
@@ -40,6 +42,7 @@ def main():
                 return
             screen.fill((18, 18, 19))
             screen.blit(small_title, title_card)
+            letter.draw(1)
             pygame.display.update()
 
 
