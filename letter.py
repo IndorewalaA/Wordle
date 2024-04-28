@@ -8,8 +8,9 @@ class Letter:
         self.color = color
         self.row = row
         self.col = col
-        self.submitted = False
         self.screen = screen
+        self.submitted = False
+        self.current = False
         self.rect = pygame.Rect(40 + ((self.col - 1) * 60) + ((self.col - 1) * 5), 70 + (self.row * 5) + (self.row * 60)
                                 , 60, 60)
 
@@ -19,10 +20,20 @@ class Letter:
     def set_submission(self, submitted: bool):
         self.submitted = submitted
 
+    def set_letter(self, letter: str):
+        self.letter = letter.capitalize()
+
     def draw(self, current):
-        font = pygame.font.Font("fonts\QUICK-ZIP.otf", 50)
-        pygame.draw.rect(self.screen, (86, 87, 88), self.rect, width=1, border_radius=1)
-        if self.letter == "":
-            return
-        if self.letter != "":
-            return
+        font = pygame.font.Font("fonts\FranklinGothic.ttf", 60)
+        if self.letter != "" and self.submitted:
+            if self.color == "gray":
+                pygame.draw.rect(self.screen, (86, 87, 88), self.rect)
+            elif self.color == "yellow":
+                pygame.draw.rect(self.screen, (181, 159, 59), self.rect)
+            elif self.color == "green":
+                pygame.draw.rect(self.screen, (83, 141, 78), self.rect)
+        else:
+            pygame.draw.rect(self.screen, (86, 87, 88), self.rect, width=2, border_radius=1)
+        letter_card = font.render(self.letter, True, (255, 255, 255))
+        letter_block = letter_card.get_rect(center=(69 + ((self.col - 1) * 60) + ((self.col - 1) * 5), 105 + (self.row * 5) + (self.row * 60)))
+        self.screen.blit(letter_card, letter_block)

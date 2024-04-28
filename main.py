@@ -6,8 +6,8 @@ from letter import Letter
 
 def main_menu(screen: pygame.Surface):
     screen.fill((18, 18, 19))
-    title_font = pygame.font.Font("fonts\FranklinGothic.ttf",70)
-    play_font = pygame.font.Font("fonts\QUICK-ZIP.otf",30)
+    title_font = pygame.font.Font("fonts\OPTIStymie-BoldCondensed.otf",70)
+    play_font = pygame.font.Font("fonts\FranklinGothic.ttf",30)
 
     title_card = title_font.render("Wordle", True, (255, 255, 255))
     title_block = title_card.get_rect(center=(200, 100))
@@ -32,13 +32,16 @@ def main():
     pygame.init()
     main_menu(screen)
     letter = Letter("red", 1, 1, screen)
+    letter.set_letter("A")
+    letter.set_color("yellow")
+    letter.set_submission(True)
     letter1 = Letter("red", 1, 2, screen)
     letter2 = Letter("red", 1, 3, screen)
     letter3 = Letter("red", 1, 4, screen)
     letter4 = Letter("red", 1, 5, screen)
     letter5 = Letter("red", 1, 6, screen)
     while True:
-        franklin_gothic = pygame.font.Font("fonts\FranklinGothic.ttf",35)
+        franklin_gothic = pygame.font.Font("fonts\OPTIStymie-BoldCondensed.otf",35)
         small_title = franklin_gothic.render("Wordle", True, (255, 255, 255))
         title_card = small_title.get_rect(center=(200, 50))
         for event in pygame.event.get():
