@@ -33,7 +33,7 @@ def main():
     pygame.init()
     main_menu(screen)
     board = Board(screen)
-    letter = Letter(0, 0, screen)
+    clock = pygame.time.Clock()
     while True:
         stymie = pygame.font.Font("fonts\OPTIStymie-BoldCondensed.otf", 35)
         small_title = stymie.render("Wordle", True, (255, 255, 255))
@@ -48,7 +48,10 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if pygame.K_a <= event.key <= pygame.K_z:
                     board.type(chr(event.key - pygame.K_a + ord('A')))
+                if event.key == pygame.K_BACKSPACE:
+                    board.delete()
             pygame.display.update()
+            clock.tick(60)
 
 
 if __name__ == "__main__":

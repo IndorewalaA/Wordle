@@ -31,11 +31,15 @@ class Board:
         self.current = self.board[row][col]
 
     def type(self, key: str):
-        self.current.letter = key
-        print("Key pressed:" + key)
-        if self.current.col != 4:
-            self.current = self.board[self.current.row][self.current.col + 1]
-        elif self.current.col == 4 and self.current.row != 5:
-            self.current = self.board[self.current.row + 1][0]
-        else:
-            self.loss = True
+        if self.current.letter == "":
+            self.current.letter = key
+            if self.current.col != 4:
+                self.current = self.board[self.current.row][self.current.col + 1]
+            else:
+                self.loss = True
+
+    def delete(self):
+        if self.current.letter != "":
+            self.current.letter = ""
+            if self.current.col != 0:
+                self.current = self.board[self.current.row][self.current.col - 1]
