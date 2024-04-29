@@ -14,7 +14,7 @@ class Board:
             for line in file:
                 words = line.strip().split()
                 self.word_list.extend(words)
-        self.word = self.word_list[random.randint(0, 5657)]
+        self.word = self.word_list[random.randint(0, 5656)]
         print(self.word)
         for i in range(6):
             for j in range(5):
@@ -33,13 +33,29 @@ class Board:
     def type(self, key: str):
         if self.current.letter == "":
             self.current.letter = key
-            if self.current.col != 4:
-                self.current = self.board[self.current.row][self.current.col + 1]
-            else:
-                self.loss = True
+        if self.current.col < 4:
+            self.current = self.board[self.current.row][self.current.col + 1]
 
     def delete(self):
-        if self.current.letter != "":
-            self.current.letter = ""
-            if self.current.col != 0:
+        if 0 < self.current.col < 4:
+            delete = self.board[self.current.row][self.current.col - 1]
+            delete.letter = ""
+            self.current = self.board[self.current.row][self.current.col - 1]
+        if self.current.col == 4:
+            if self.current.letter == "":
+                delete = self.board[self.current.row][self.current.col - 1]
+                delete.letter = ""
                 self.current = self.board[self.current.row][self.current.col - 1]
+            else:
+                self.current.letter = ""
+
+
+
+
+    def check_real(self):
+        attempted_word = ""
+        for i in range(5):
+            attempted_word += self.board[self.current.row][i].letter.lower()
+        for word in self.word_list:
+            if attempted_word == word:
+                return True
