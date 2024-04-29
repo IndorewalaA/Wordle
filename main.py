@@ -50,8 +50,15 @@ def main():
                     board.type(chr(event.key - pygame.K_a + ord('A')))
                 if event.key == pygame.K_BACKSPACE:
                     board.delete()
+                if event.key == pygame.K_RETURN:
+                    if board.board[board.current.row][4].letter != "":
+                        if board.check_real():
+                            board.submit()
+                        else:
+                            print("Not a real letter!")
+                    else:
+                        print("Print 5 letters!!!")
             pygame.display.update()
-            clock.tick(60)
 
 
 if __name__ == "__main__":
