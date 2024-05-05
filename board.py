@@ -3,7 +3,6 @@ from collections import Counter
 import pygame
 import random
 
-
 class Board:
     board: list[list[Letter]]
 
@@ -82,3 +81,5 @@ class Board:
 
         if self.current.row < 5:
             self.current = self.board[self.current.row + 1][0]
+
+

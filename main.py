@@ -29,36 +29,48 @@ def main_menu(screen: pygame.Surface):
 
 
 def main():
-    screen = pygame.display.set_mode((400, 600))
     pygame.init()
+    screen = pygame.display.set_mode((400, 600))
     main_menu(screen)
     board = Board(screen)
     clock = pygame.time.Clock()
+    draw_word_error = False
+    hide_text_time = 0
+    stymie = pygame.font.Font("fonts\OPTIStymie-BoldCondensed.otf", 35)
+    error_font = pygame.font.Font("fonts\FranklinGothic.ttf", 15)
     while True:
-        stymie = pygame.font.Font("fonts\OPTIStymie-BoldCondensed.otf", 35)
         small_title = stymie.render("Wordle", True, (255, 255, 255))
         title_card = small_title.get_rect(center=(200, 50))
+        screen.fill((18, 18, 19))
+        screen.blit(small_title, title_card)
+        board.draw()
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
                 return
-            screen.fill((18, 18, 19))
-            screen.blit(small_title, title_card)
-            board.draw()
             if event.type == pygame.KEYDOWN:
                 if pygame.K_a <= event.key <= pygame.K_z:
                     board.type(chr(event.key - pygame.K_a + ord('A')))
-                if event.key == pygame.K_BACKSPACE:
+                elif event.key == pygame.K_BACKSPACE:
                     board.delete()
-                if event.key == pygame.K_RETURN:
+                elif event.key == pygame.K_RETURN:
                     if board.board[board.current.row][4].letter != "":
                         if board.check_real():
                             board.submit()
                         else:
-                            print("Not a real letter!")
+                            hide_text_time = pygame.time.get_ticks() + 1000
+                            draw_word_error = True
                     else:
                         print("Print 5 letters!!!")
-            pygame.display.update()
+        if draw_word_error:
+            word_error = error_font.render("Not in word list", True, (0, 0, 0))
+            word_error_rect = word_error.get_rect(center=(screen.get_width()/2, 550))
+            pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(140, 535, 121, 30), 0, 3)
+            screen.blit(word_error, word_error_rect)
+            if pygame.time.get_ticks() > hide_text_time:
+                draw_word_error = False
+        pygame.display.update()
+        clock.tick(30)
 
 
 if __name__ == "__main__":
