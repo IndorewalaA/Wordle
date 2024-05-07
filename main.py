@@ -51,12 +51,7 @@ def main():
         screen.fill((18, 18, 19))
         screen.blit(small_title, title_card)
         board.draw()
-        key.draw(screen)
-        key1.draw(screen)
-        key2.draw(screen)
-        key3.draw(screen)
-        key4.draw(screen)
-        key5.draw(screen)
+        board.draw_keys()
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -70,6 +65,7 @@ def main():
                     if board.board[board.current.row][4].letter != "":
                         if board.check_real():
                             board.submit()
+                            board.update_keys()
                         else:
                             hide_text_time = pygame.time.get_ticks() + 1000
                             draw_word_error = True

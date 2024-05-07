@@ -31,6 +31,8 @@ class Key:
             pygame.draw.rect(screen, (129, 131, 132), self.rect, 0, 3)
         elif self.color == "black":
             pygame.draw.rect(screen, (58, 58, 60), self.rect, 0, 3)
+        elif self.color == "green":
+            pygame.draw.rect(screen, (83, 141, 78), self.rect, 0, 3)
         letter_card = font.render(self.letter, True, (255, 255, 255))
         if self.row == 1:
             letter_block = letter_card.get_rect(center=(37 + ((self.col - 1) * 31) + ((self.col - 1) * 5), 525 +

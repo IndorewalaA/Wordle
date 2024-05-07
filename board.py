@@ -3,7 +3,6 @@ from key import Key
 import pygame
 import random
 
-
 class Board:
     board: list[list[Letter]]
 
@@ -22,11 +21,53 @@ class Board:
                 self.board[i].append(Letter(j, i, self.screen))
         self.current = self.board[0][0]
         self.loss = False
+        self.key_dict = {}
+        self.add_keys()
+
+    def add_keys(self):
+        self.key_dict["Q"] = Key("Q", 1)
+        self.key_dict["W"] = Key("W", 2)
+        self.key_dict["E"] = Key("E", 3)
+        self.key_dict["R"] = Key("R", 4)
+        self.key_dict["T"] = Key("T", 5)
+        self.key_dict["Y"] = Key("Y", 6)
+        self.key_dict["U"] = Key("U", 7)
+        self.key_dict["I"] = Key("I", 8)
+        self.key_dict["O"] = Key("O", 9)
+        self.key_dict["P"] = Key("P", 10)
+        self.key_dict["A"] = Key("A", 1)
+        self.key_dict["S"] = Key("S", 2)
+        self.key_dict["D"] = Key("D", 3)
+        self.key_dict["F"] = Key("F", 4)
+        self.key_dict["G"] = Key("G", 5)
+        self.key_dict["H"] = Key("H", 6)
+        self.key_dict["J"] = Key("J", 7)
+        self.key_dict["K"] = Key("K", 8)
+        self.key_dict["L"] = Key("L", 9)
+        self.key_dict["Z"] = Key("Z", 1)
+        self.key_dict["X"] = Key("X", 2)
+        self.key_dict["C"] = Key("C", 3)
+        self.key_dict["V"] = Key("V", 4)
+        self.key_dict["B"] = Key("B", 5)
+        self.key_dict["N"] = Key("N", 6)
+        self.key_dict["M"] = Key("M", 7)
+
+    def update_keys(self):
+        for i in range(5):
+            letter = self.board[self.current.row - 1][i].letter.upper()
+            if self.board[self.current.row - 1][i].color == "green":
+                self.key_dict[letter].color = "green"
+            else:
+                self.key_dict[letter].color = "black"
 
     def draw(self):
         for row in self.board:
             for element in row:
                 element.draw()
+
+    def draw_keys(self):
+        for key in self.key_dict.values():
+            key.draw(self.screen)
 
     def select(self, row: int, col: int):
         self.current = self.board[row][col]
