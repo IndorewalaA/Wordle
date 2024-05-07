@@ -39,12 +39,6 @@ def main():
     hide_text_time = 0
     stymie = pygame.font.Font("fonts\OPTIStymie-BoldCondensed.otf", 35)
     error_font = pygame.font.Font("fonts\FranklinGothic.ttf", 15)
-    key = Key("Q", 1)
-    key1 = Key("P", 10)
-    key2 = Key("A", 1)
-    key3 = Key("L", 9)
-    key4 = Key("Z", 1)
-    key5 = Key("M", 7)
     while True:
         small_title = stymie.render("Wordle", True, (255, 255, 255))
         title_card = small_title.get_rect(center=(200, 50))
@@ -56,22 +50,23 @@ def main():
             if event.type == QUIT:
                 pygame.quit()
                 return
-            if event.type == pygame.KEYDOWN:
-                if pygame.K_a <= event.key <= pygame.K_z:
-                    board.type(chr(event.key - pygame.K_a + ord('A')))
-                elif event.key == pygame.K_BACKSPACE:
-                    board.delete()
-                elif event.key == pygame.K_RETURN:
-                    if board.board[board.current.row][4].letter != "":
-                        if board.check_real():
-                            board.submit()
-                            board.update_keys()
+            if not board.loss and not board.win:
+                if event.type == pygame.KEYDOWN:
+                    if pygame.K_a <= event.key <= pygame.K_z:
+                        board.type(chr(event.key - pygame.K_a + ord('A')))
+                    elif event.key == pygame.K_BACKSPACE:
+                        board.delete()
+                    elif event.key == pygame.K_RETURN:
+                        if board.board[board.current.row][4].letter != "":
+                            if board.check_real():
+                                board.submit()
+                                board.update_keys()
+                            else:
+                                hide_text_time = pygame.time.get_ticks() + 1000
+                                draw_word_error = True
                         else:
                             hide_text_time = pygame.time.get_ticks() + 1000
-                            draw_word_error = True
-                    else:
-                        hide_text_time = pygame.time.get_ticks() + 1000
-                        draw_five_error = True
+                            draw_five_error = True
         if draw_word_error:
             word_error = error_font.render("Not in word list", True, (0, 0, 0))
             word_error_rect = word_error.get_rect(center=(screen.get_width()/2, 550))

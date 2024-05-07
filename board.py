@@ -21,8 +21,10 @@ class Board:
                 self.board[i].append(Letter(j, i, self.screen))
         self.current = self.board[0][0]
         self.loss = False
+        self.win = False
         self.key_dict = {}
         self.add_keys()
+        self.turn_num = 0
 
     def add_keys(self):
         self.key_dict["Q"] = Key("Q", 1)
@@ -100,14 +102,15 @@ class Board:
                 return True
 
     def submit(self):
+        self.turn_num += 1
         checkWin = True
-        matched_letters = set()  # Set to keep track of matched letters
+        matched_letters = set()
         for i in range(5):
             guess_letter = self.board[self.current.row][i].letter.lower()
             target_letter = self.word[i]
             if guess_letter == target_letter:
                 self.board[self.current.row][i].color = "green"
-                matched_letters.add(guess_letter)  # Add matched letter to set
+                matched_letters.add(guess_letter)
             else:
                 if guess_letter.lower() in matched_letters:
                     self.board[self.current.row][i].color = "gray"
@@ -117,9 +120,9 @@ class Board:
                     self.board[self.current.row][i].color = "gray"
                 checkWin = False
             self.board[self.current.row][i].set_submission(True)
-
         if checkWin:
-            print("YOU WIN :D")
-
+            self.win = True
+        elif self.turn_num == 6:
+            self.loss = True
         if self.current.row < 5:
             self.current = self.board[self.current.row + 1][0]
