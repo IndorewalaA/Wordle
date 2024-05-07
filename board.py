@@ -1,7 +1,8 @@
 from letter import Letter
-from collections import Counter
+from key import Key
 import pygame
 import random
+
 
 class Board:
     board: list[list[Letter]]
@@ -81,5 +82,3 @@ class Board:
 
         if self.current.row < 5:
             self.current = self.board[self.current.row + 1][0]
-
-

@@ -2,7 +2,7 @@ import pygame
 import sys
 from pygame.locals import *
 from board import Board
-from letter import Letter
+from key import Key
 
 
 def main_menu(screen: pygame.Surface):
@@ -30,20 +30,33 @@ def main_menu(screen: pygame.Surface):
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((400, 600))
+    screen = pygame.display.set_mode((400, 700))
     main_menu(screen)
     board = Board(screen)
     clock = pygame.time.Clock()
     draw_word_error = False
+    draw_five_error = False
     hide_text_time = 0
     stymie = pygame.font.Font("fonts\OPTIStymie-BoldCondensed.otf", 35)
     error_font = pygame.font.Font("fonts\FranklinGothic.ttf", 15)
+    key = Key("Q", 1)
+    key1 = Key("P", 10)
+    key2 = Key("A", 1)
+    key3 = Key("L", 9)
+    key4 = Key("Z", 1)
+    key5 = Key("M", 7)
     while True:
         small_title = stymie.render("Wordle", True, (255, 255, 255))
         title_card = small_title.get_rect(center=(200, 50))
         screen.fill((18, 18, 19))
         screen.blit(small_title, title_card)
         board.draw()
+        key.draw(screen)
+        key1.draw(screen)
+        key2.draw(screen)
+        key3.draw(screen)
+        key4.draw(screen)
+        key5.draw(screen)
         for event in pygame.event.get():
             if event.type == QUIT:
                 pygame.quit()
@@ -61,16 +74,24 @@ def main():
                             hide_text_time = pygame.time.get_ticks() + 1000
                             draw_word_error = True
                     else:
-                        print("Print 5 letters!!!")
+                        hide_text_time = pygame.time.get_ticks() + 1000
+                        draw_five_error = True
         if draw_word_error:
             word_error = error_font.render("Not in word list", True, (0, 0, 0))
             word_error_rect = word_error.get_rect(center=(screen.get_width()/2, 550))
-            pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(140, 535, 121, 30), 0, 3)
+            pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(140, 535, 121, 30), 0, 2)
             screen.blit(word_error, word_error_rect)
             if pygame.time.get_ticks() > hide_text_time:
                 draw_word_error = False
+        if draw_five_error:
+            letter_error = error_font.render("Not enough letters", True, (0, 0,0))
+            letter_error_rect = letter_error.get_rect(center=(screen.get_width()/2, 550))
+            pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(130, 535, 140, 30), 0, 2)
+            screen.blit(letter_error, letter_error_rect)
+            if pygame.time.get_ticks() > hide_text_time:
+                draw_five_error = False
         pygame.display.update()
-        clock.tick(30)
+        clock.tick(144)
 
 
 if __name__ == "__main__":
