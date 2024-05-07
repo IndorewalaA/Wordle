@@ -39,6 +39,10 @@ def main():
     hide_text_time = 0
     stymie = pygame.font.Font("fonts\OPTIStymie-BoldCondensed.otf", 35)
     error_font = pygame.font.Font("fonts\FranklinGothic.ttf", 15)
+    font = pygame.font.Font("fonts\FranklinGothic.ttf", 36)
+    font2 = pygame.font.Font("fonts\FranklinGothic.ttf", 20)
+    font3 = pygame.font.Font("fonts\FranklinGothic.ttf", 18)
+    retry_font = pygame.font.Font("fonts\OPTIStymie-BoldCondensed.otf", 20)
     while True:
         small_title = stymie.render("Wordle", True, (255, 255, 255))
         title_card = small_title.get_rect(center=(200, 50))
@@ -75,12 +79,29 @@ def main():
             if pygame.time.get_ticks() > hide_text_time:
                 draw_word_error = False
         if draw_five_error:
-            letter_error = error_font.render("Not enough letters", True, (0, 0,0))
+            letter_error = error_font.render("Not enough letters", True, (0, 0, 0))
             letter_error_rect = letter_error.get_rect(center=(screen.get_width()/2, 550))
             pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(130, 535, 140, 30), 0, 2)
             screen.blit(letter_error, letter_error_rect)
             if pygame.time.get_ticks() > hide_text_time:
                 draw_five_error = False
+        if board.win:
+            pygame.draw.rect(screen, (58, 58, 60), pygame.Rect(screen.get_width()/4, 180, screen.get_width()/2, 300), 0, 3)
+            pygame.draw.rect(screen, (255, 255, 255), pygame.Rect(screen.get_width()/4, 180, screen.get_width()/2, 300), 1, 3)
+            win_line1 = font.render("You win!", True, (255, 255, 255))
+            win_line1_rect = win_line1.get_rect(center=(screen.get_width()/2, 220))
+            temp_string = "The word was " + board.word + "."
+            win_line2 = font2.render(temp_string, True, (255, 255, 255))
+            win_line2_rect = win_line2.get_rect(center=(200, 260))
+            win_line3 = font3.render("It took you " + str(board.turn_num) + " attempts", True, (255, 255, 255))
+            win_line3_rect = win_line2.get_rect(center=(200, 290))
+            pygame.draw.rect(screen, (83, 141, 78), pygame.Rect(screen.get_width() * (3 / 8), 330, 100, 50), 0, 3)
+            retry = retry_font.render("Play Again", True, (255, 255, 255))
+            retry_rect = retry.get_rect(center=(screen.get_width()/2, 355))
+            screen.blit(win_line1, win_line1_rect)
+            screen.blit(win_line2, win_line2_rect)
+            screen.blit(win_line3, win_line3_rect)
+            screen.blit(retry, retry_rect)
         pygame.display.update()
         clock.tick(144)
 
